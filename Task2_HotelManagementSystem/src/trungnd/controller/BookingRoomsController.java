@@ -41,25 +41,33 @@ public class BookingRoomsController {
 	
 	public String makeDate(Calendar c) {
 		String inputDateString;
-        boolean check;
-        do {
-        	check = true;
-        	inputDateString = utl.checkInputString();
-			if (!inputDateString.matches("(0[1-9]|[12][0-9]|3[01])(/|-)(0[1-9]|1[012])(/|-)(20\\d\\d)")) {
-				System.out.println("Please enter again!");
-				check = false;
+		boolean check;
+		do {
+			check = true;
+			inputDateString = utl.checkInputString();
+				if (!inputDateString.matches("(0?[1-9]|[12][0-9]|3[01])(/|-)(0?[1-9]|1[012])(/|-)(20\\d\\d)")) {
+					System.out.println("Please enter again!");
+					check = false;
+				}
+			} while (check == false);
+		if (inputDateString.charAt(1) == '-' || inputDateString.charAt(1) == '/') { // 1/11/2021
+				inputDateString = "0" + inputDateString; 
 			}
-		} while (check == false);
-        int day = Integer.parseInt(inputDateString.substring(0, 2).trim().toString());
-        int month = Integer.parseInt(inputDateString.substring(3, 5).trim().toString());
-        int year = Integer.parseInt(inputDateString.substring(6, 10).trim().toString());
-        inputDateString = year + "-" + month + "-" + day;
-        int hour = 13;
-        int minute = 00;
-        int second = 00;
- 
-        return inputDateString + " " + hour + ":" + minute + ":" + second;
-    }
+		if (inputDateString.charAt(4) == '-' || inputDateString.charAt(4) == '/') { // 11/1/2021
+				String str1 = inputDateString.substring(0, 3).trim().toString();
+				String str2 = inputDateString.substring(3, 9).trim().toString();
+				inputDateString = str1 + "0" + str2;
+			}
+		int day = Integer.parseInt(inputDateString.substring(0, 2).trim().toString());
+		int month = Integer.parseInt(inputDateString.substring(3, 5).trim().toString());
+		int year = Integer.parseInt(inputDateString.substring(6, 10).trim().toString());
+		inputDateString = year + "-" + month + "-" + day;
+		int hour = 13;
+		int minute = 00;
+		int second = 00;
+
+		return inputDateString + " " + hour + ":" + minute + ":" + second;
+    	}
 	
 	public void bookRoom(int chooseRoom, String username) {
 		String roomID = listRoom.get(chooseRoom).getRoomID().toString();
