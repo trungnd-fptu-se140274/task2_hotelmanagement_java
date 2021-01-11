@@ -131,10 +131,10 @@ public class BookingRoomsController {
 			check = false;
 			System.out.println("Choose Room with number: ");
 			chooseRoomToBook = utl.checkInputIntLimit(1, listRoom.size());
-			if (listRoom.get(chooseRoomToBook).isStatus()) {
-				check = true;
-				bookRoom(chooseRoomToBook, username);
+			if (listRoom.get(chooseRoomToBook - 1).isStatus()) {
+				check = true;			
 				System.out.println("Completed!");
+				bookRoom(chooseRoomToBook - 1, username);
 			} else {
 				System.err.print("Room is in service! Please choose another room!\t\n");
 				check = false;
